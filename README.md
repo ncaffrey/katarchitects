@@ -1,1 +1,3 @@
 # katarchitects
+
+Architectural Katas Workshop
