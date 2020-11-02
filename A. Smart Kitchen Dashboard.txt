@@ -1,0 +1,43 @@
+# Title - A. Smart Kitchen Dashboard
+
+## Status - Proposed
+
+## Context - 
+### Requirement (Functional) : 
+ - Send inventory updates to central kitchen
+
+### Solution : A Dashboard for smart kitchen 
+   Async Alerts from Smart Fridges & POS - Sends alerts when food purchase or inventory updation by sending a message to the Message Queue by smart fridge
+   1.1 Messaging Queue - Publish Async alerts 
+        Smart Fridge Purchase MQ
+        Smart Fridge Inventory MQ
+        POS Inventory MQ
+        POS Purchase MQ
+   1.2 System API - Consumer for Async alerts 
+        Smart Fridge Purchase System API - Consumer for the alerts of food items purchase from Smart Fridge
+        Smart Fridge Inventory System API - Consumer for the alerts of food items inventory from Smart Fridge
+        Inventory Management System API - Cosumes Inventory alerts and update to inventory management system 
+        POS Inventory System API - Consumer for the alerts of food items inventory from POS
+        POS Purchase System API - Consumer for the alerts of food items purchase from POS
+   1.3 Process API - Orchestrate and Transform Alerts from Smart Fridge and POS or any new device format for future provisioning
+        Inventory Process API - Inventory from POS and Smart fridge would be transformed in this API
+        Purchase Process API - Purchase from POS and Smart fridge to be transformed in this API
+   1.4 Expereince API - To support Channel specific Dashboard
+   
+### Dependency & Assumption
+        Inventory Management System - As-is solution
+        Smart Fridge Management System - As-is solution
+        POS Notification - Assumed Feature
+
+## Decision - API-Led Architecture with Message Queue and Micro services
+1.  System API, Process API, Experiece API are cloud based microservices, scalability, elasticity would be achieved
+2.  A solution is categorised into Inventory module and purchase module which can be indepedently implemented. All the apis can be changed independently to achieve modularity.
+3.  Message Queuing to capture the events which are fault tolerent, database behind inventory management system ensure reliability.
+4.  Micro services (System API, Process API, Experiece API)  on cloud provides elasticity in case of high demand of users in peak time and or peak season(holidays)
+5.  Security - Following Policy on microservices to be applied for security and compliance
+        5.1 - Rate limit - Number of requests per second and burst time
+        5.2 - Authorization Policy - Token based authorization would track and control the requests and provide secured access.
+
+## Consequences
+1. A Three Layer Architecture mentioned above would add network delay if deployment model is wrongly choosed.
+

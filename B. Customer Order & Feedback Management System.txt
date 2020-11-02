@@ -1,0 +1,39 @@
+# Title - B. Customer Order & Feedback Management System
+
+## Status - Proposed
+
+## Context - 
+### Requirement (Functional): 
+- Support providing feedback on items of verified purchases and in app surveys
+- Place Order from available food items
+- Explore available food items
+
+### Solution : Customer Order & Feedback Management System 
+   1.1 System API - Synchronous call from process api
+        Inventory Management System API - To interface inventory management system 
+        Order Management System API - To interface Order management system
+        Feedback system api - To interface feedback system
+   1.3 Process API - Orchestrate Purchase Process
+        Purchase Process API - Any food item Purchase request, inventory would be checked and updated by calling Inventory Management System API and then call to Order Management System API in the same Transaction.
+   1.4 Expereince API - Mobile/Web channel interface to see available food items (Inventory) and place the order (Purchase)
+        Inventory Experience API - To see available food items by calling  Inventory Management System API
+        Purchase Experience API - 
+                - To place the order call Purchase Process API 
+                - To provide feedback for the given order call Feedback System API
+### Dependency & Assumption
+        Inventory Management System - As-is solution
+        Order Management System - As-is solution
+        Feedback System - As-is solution 
+
+## Decision - API-Led Architecture with Message Queue and Micro services
+1.  System API, Process API, Experiece API are cloud based microservices, scalability, elasticity would be achieved
+2.  A solution is categorised into Inventory module and purchase module which can be indepedently implemented. All the apis can be changed independently to achieve modularity.
+3.  Database behind Inventory Management System, Order Management System and Feedback system ensure reliability.
+4.  Micro services (System API, Process API, Experiece API)  on cloud provides elasticity in case of high demand of users in pick time and or peak season(holidays)
+5.  Security - Following Policy on microservices to be applied for security and compliance
+        5.1 - Rate limit - Number of requests per second and burst time
+        5.2 - Authorization Policy - Token based authorization would track and control the requests and provide secured access.
+
+## Consequences
+1. A Three Layer Architecture mentioned above would add network delay if deployment model is wrongly choosed.
+
