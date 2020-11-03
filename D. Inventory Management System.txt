@@ -1,0 +1,27 @@
+# Title - D. Inventory Management System
+
+## Status - Proposed
+
+## Context - 
+### Requirement (Functional): 
+        - When New Food item is prepared from the kitchen and is available to the Inventory
+        - Expired item from the smart fridge or POS can be removed from the inventory
+### Solution : Inventory (Food Items) Management System
+   1.1 System API - Synchronous call from experience api
+        Inventory Management System API - To interface Inventory Management System to update the inventory either from Kitchen or from equipment
+   1.2 Experience API - Mobile/Web channel interface to register / unregister equipments
+        Inventory Management Experience API - Call Inventory Management System API Synchronously
+### Dependency & Assumption
+        Inventory Management System - As-is system to manage inventory in POS and Smart fridges
+
+## Decision - API-Led Architecture with Micro services
+1.  System API, Process API, Experiece API are cloud based microservices, scalablity, elasticity would be achieved
+2.  Database behind Inventory Management System  ensure reliability.
+3.  Micro services (System API, Experiece API)  on cloud provides elasticity in case of high demand of users in pick time and or peak season(holidays)
+4.  Security - Following Policy on microservices to be applied for security and compliance
+        5.1 - Rate limit - Number of requests per second and burst time
+        5.2 - Authorization Policy - Token based authorization would track and control the requests and provide secured access.
+
+## Consequences
+1. A Three Layer Architecture mentioned above would add network delay if deployment model is wrongly choosed.
+

@@ -1,0 +1,27 @@
+# Title - C. Equipment Management System
+
+## Status - Proposed
+
+## Context - 
+### Requirement (Functional): 
+        - Register equipment 
+        - Un-Register equipment
+### Solution : Equipment Management System
+   1.1 System API - Synchrounous call from experience api
+        Equipment Management System API - To interface Equipment Management System with two endpoints to register and unregister equipments 
+   1.4 Expereince API - Mobile/Web channel interface to register / unregister equipments
+        Equipment Management Experience API - Call Equipment Management System API Synchrounously
+### Dependency & Assumption
+        Equipment Management System - As-is system to manage POS and Smart fridges
+
+## Decision - API-Led Architecture with Message Queue and Micro services
+1.  System API, Process API, Experiece API are cloud based microservices scalability, elasticity would be achieved
+2.  Database behind Equipment Management System  ensure reliability.
+3.  Micro services (System API, Experiece API)  on cloud provides elasticity in case of high demand of users in pick time and or peak season(holidays)
+4.  Security - Following Policy on microservices to be applied for security and compliance
+        5.1 - Rate limit - No of requests per second and burst time
+        5.2 - Authrization Policy - Token based authorization would track and control the requests and provide secured access.
+
+## Consequences
+1. A Three Layer Architecture mentioned above would add network delay if deployment model is wrongly choosed.
+
